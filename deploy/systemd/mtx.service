@@ -1,0 +1,23 @@
+[Unit]
+Description=MediaMTX Control Engine
+After=network-online.target redis.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/mtx/control-engine
+Environment=NODE_ENV=production
+EnvironmentFile=-/opt/mtx/config/control-engine.env
+ExecStart=/usr/bin/node /opt/mtx/control-engine/dist/index.js
+Restart=always
+RestartSec=2
+LimitNOFILE=1048576
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/opt/mtx/config /opt/mtx/logs /opt/mtx/backups
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,23 @@
+logLevel: warn
+api: yes
+apiAddress: 127.0.0.1:9997
+metrics: yes
+metricsAddress: 127.0.0.1:9998
+pprof: no
+rtsp: yes
+rtspAddress: 127.0.0.1:8554
+rtmp: yes
+rtmpAddress: 127.0.0.1:1935
+hls: yes
+hlsAddress: 127.0.0.1:8888
+webrtc: yes
+webrtcAddress: 127.0.0.1:8889
+record: yes
+recordPath: /opt/mtx/recordings/%path/%Y-%m-%d_%H-%M-%S
+paths:
+  all:
+    source: publisher
+    publishUser: '{{env "MTX_PUBLISH_USER"}}'
+    publishPass: '{{env "MTX_PUBLISH_PASS"}}'
+    readUser: '{{env "MTX_READ_USER"}}'
+    readPass: '{{env "MTX_READ_PASS"}}'
