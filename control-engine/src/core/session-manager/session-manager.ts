@@ -16,5 +16,6 @@ export class SessionManager {
     return values
       .filter((value): value is string => value !== null)
       .map((value) => JSON.parse(value) as UserSession);
+    return values.filter(Boolean).map((v) => JSON.parse(v as string) as UserSession);
   }
 }
