@@ -51,6 +51,21 @@ fi
 install -d -m 0750 "$BASE" "$BASE"/{mediamtx,control-engine,dashboard,config,logs,recordings,backups} "$BASE/config/versions"
 
 if [[ ! -f "$BASE/mediamtx/mediamtx" ]]; then
+  MTX_URL="$(curl -fsSL https://api.github.com/repos/bluenviron/mediamtx/releases/latest \
+    | jq -r '.assets[] | select(.name | test("linux_amd64.*\\.tar\\.gz$")) | .browser_download_url' \
+    | head -n1)"
+
+  if [[ -z "$MTX_URL" ]]; then
+    echo "Unable to find latest linux_amd64 MediaMTX tarball URL" >&2
+    exit 1
+  fi
+
+  curl -fL "$MTX_URL" -o /tmp/mediamtx.tgz
+  if ! file /tmp/mediamtx.tgz | grep -qi 'gzip compressed'; then
+    echo "Downloaded MediaMTX artifact is not a gzip archive" >&2
+    exit 1
+  fi
+
   curl -L https://github.com/bluenviron/mediamtx/releases/latest/download/mediamtx_v1.8.4_linux_amd64.tar.gz -o /tmp/mediamtx.tgz
   tar -xzf /tmp/mediamtx.tgz -C "$BASE/mediamtx"
 fi
@@ -100,9 +115,6 @@ LIMITS
 
 systemctl daemon-reload
 systemctl enable --now mediamtx mtx nginx
-
-systemctl daemon-reload
-systemctl enable --now mediamtx mtx mtx-dashboard nginx
 nginx -t && systemctl reload nginx
 
 echo "==== MediaMTX Appliance Installed ===="
