@@ -64,3 +64,12 @@ sudo ./mtx-install.sh --with-redis --with-prometheus --ssl --noninteractive
 cd control-engine && npm install && npm run dev
 cd dashboard && npm install && npm run dev
 ```
+
+
+## Post-install quick checks
+
+```bash
+systemctl status mediamtx --no-pager
+systemctl status mtx --no-pager
+curl -sS http://127.0.0.1:8081/api/health
+```
