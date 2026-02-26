@@ -24,6 +24,7 @@ fi
 
 BASE=/opt/mtx
 apt-get update
+apt-get install -y curl ca-certificates gnupg lsb-release build-essential nginx git jq rsync
 apt-get install -y curl ca-certificates gnupg lsb-release build-essential nginx ufw git jq
 
 if ! command -v node >/dev/null; then
@@ -94,6 +95,8 @@ www-data soft nofile 1048576
 www-data hard nofile 1048576
 LIMITS
 
+systemctl daemon-reload
+systemctl enable --now mediamtx mtx nginx
 
 systemctl daemon-reload
 systemctl enable --now mediamtx mtx mtx-dashboard nginx

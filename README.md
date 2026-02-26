@@ -6,6 +6,9 @@ Production-grade single-node streaming appliance for Ubuntu 22.04 with MediaMTX 
 
 - **MediaMTX** in `/opt/mtx/mediamtx`
 - **Control Engine** (Fastify + WS + Redis + rolling config) in `/opt/mtx/control-engine`
+- **Dashboard** (React + Vite + Zustand + WS live updates), built to static files in `/opt/mtx/dashboard/dist`
+- **NGINX** reverse proxy and rate limiter
+- **Systemd** managed services for mediamtx/control
 - **Dashboard** (React + Vite + Zustand + WS live updates) in `/opt/mtx/dashboard`
 - **NGINX** reverse proxy and rate limiter
 - **Systemd** managed services for mediamtx/control/dashboard
@@ -32,6 +35,13 @@ sudo ./mtx-install.sh --with-redis --with-prometheus --ssl --noninteractive
 - `--with-prometheus`
 - `--ssl`
 - `--noninteractive`
+
+## GUI / API ports
+
+- **HTTP GUI**: `http://<server-ip>/` (port **80** via NGINX)
+- **Control API (internal upstream)**: `127.0.0.1:8081`
+- **MediaMTX API (localhost only)**: `127.0.0.1:9997`
+- **MediaMTX metrics (localhost only)**: `127.0.0.1:9998`
 
 ## Runtime layout
 
