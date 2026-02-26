@@ -9,12 +9,6 @@ Production-grade single-node streaming appliance for Ubuntu 22.04 with MediaMTX 
 - **Dashboard** (React + Vite + Zustand + WS live updates), built to static files in `/opt/mtx/dashboard/dist`
 - **NGINX** reverse proxy and rate limiter
 - **Systemd** managed services for mediamtx/control
-<<<<<<< codex/build-production-grade-streaming-control-appliance-wlaoa2
-=======
-- **Dashboard** (React + Vite + Zustand + WS live updates) in `/opt/mtx/dashboard`
-- **NGINX** reverse proxy and rate limiter
-- **Systemd** managed services for mediamtx/control/dashboard
->>>>>>> main
 
 ## Key platform capabilities
 
@@ -63,14 +57,19 @@ sudo ./mtx-install.sh --with-redis --with-prometheus --ssl --noninteractive
 
 - `/etc/systemd/system/mediamtx.service`
 - `/etc/systemd/system/mtx.service`
-<<<<<<< codex/build-production-grade-streaming-control-appliance-wlaoa2
-=======
-- `/etc/systemd/system/mtx-dashboard.service`
->>>>>>> main
 
 ## Development
 
 ```bash
 cd control-engine && npm install && npm run dev
 cd dashboard && npm install && npm run dev
+```
+
+
+## Post-install quick checks
+
+```bash
+systemctl status mediamtx --no-pager
+systemctl status mtx --no-pager
+curl -sS http://127.0.0.1:8081/api/health
 ```
