@@ -60,6 +60,9 @@ rsync -a --delete ./dashboard/ "$BASE/dashboard/"
 rsync -a ./config/mediamtx.yml "$BASE/config/mediamtx.yml"
 
 pushd "$BASE/control-engine" >/dev/null
+npm install
+npm run build
+npm prune --omit=dev
 npm install --omit=dev
 npm run build
 popd >/dev/null
