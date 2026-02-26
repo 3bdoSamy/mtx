@@ -25,6 +25,7 @@ fi
 BASE=/opt/mtx
 apt-get update
 apt-get install -y curl ca-certificates gnupg lsb-release build-essential nginx git jq rsync
+apt-get install -y curl ca-certificates gnupg lsb-release build-essential nginx ufw git jq
 
 if ! command -v node >/dev/null; then
   curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
@@ -62,6 +63,8 @@ pushd "$BASE/control-engine" >/dev/null
 npm install
 npm run build
 npm prune --omit=dev
+npm install --omit=dev
+npm run build
 popd >/dev/null
 
 pushd "$BASE/dashboard" >/dev/null
@@ -79,6 +82,7 @@ fi
 
 install -m 0644 ./deploy/systemd/mediamtx.service /etc/systemd/system/mediamtx.service
 install -m 0644 ./deploy/systemd/mtx.service /etc/systemd/system/mtx.service
+install -m 0644 ./deploy/systemd/mtx-dashboard.service /etc/systemd/system/mtx-dashboard.service
 
 cat >/etc/sysctl.d/99-mtx.conf <<SYSCTL
 net.core.somaxconn=65535
@@ -96,6 +100,9 @@ LIMITS
 
 systemctl daemon-reload
 systemctl enable --now mediamtx mtx nginx
+
+systemctl daemon-reload
+systemctl enable --now mediamtx mtx mtx-dashboard nginx
 nginx -t && systemctl reload nginx
 
 echo "==== MediaMTX Appliance Installed ===="
