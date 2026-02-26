@@ -94,13 +94,6 @@ www-data soft nofile 1048576
 www-data hard nofile 1048576
 LIMITS
 
-ufw allow 22/tcp || true
-ufw allow 80/tcp || true
-ufw allow 443/tcp || true
-ufw allow 1935/tcp || true
-ufw allow 8554/tcp || true
-ufw allow 8888/tcp || true
-ufw --force enable || true
 
 systemctl daemon-reload
 systemctl enable --now mediamtx mtx mtx-dashboard nginx
