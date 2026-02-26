@@ -1,3 +1,7 @@
+import Redis, { type Redis as RedisClient } from 'ioredis';
+
+export class RedisLayer {
+  readonly client: RedisClient;
 import Redis from 'ioredis';
 
 export class RedisLayer {

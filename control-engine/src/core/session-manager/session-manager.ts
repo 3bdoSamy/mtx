@@ -13,6 +13,9 @@ export class SessionManager {
     const keys = await this.redis.client.keys('session:*');
     if (!keys.length) return [];
     const values = await this.redis.client.mget(keys);
+    return values
+      .filter((value): value is string => value !== null)
+      .map((value) => JSON.parse(value) as UserSession);
     return values.filter(Boolean).map((v) => JSON.parse(v as string) as UserSession);
   }
 }
