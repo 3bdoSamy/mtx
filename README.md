@@ -73,8 +73,3 @@ systemctl status mediamtx --no-pager
 systemctl status mtx --no-pager
 curl -sS http://127.0.0.1:8081/api/health
 ```
-
-
-### Troubleshooting installer builds
-
-If your shell exports `NODE_ENV=production`, installer builds still work because the script forces dev dependency installation during build steps. The installer keeps control-engine build dependencies installed to guarantee `tsc` availability across repeated installs.
