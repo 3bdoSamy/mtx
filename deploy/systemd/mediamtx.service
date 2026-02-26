@@ -1,0 +1,18 @@
+[Unit]
+Description=MediaMTX Streaming Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/mtx/mediamtx
+EnvironmentFile=-/opt/mtx/config/mediamtx.env
+ExecStart=/opt/mtx/mediamtx/mediamtx /opt/mtx/config/mediamtx.yml
+Restart=always
+RestartSec=1
+LimitNOFILE=1048576
+
+[Install]
+WantedBy=multi-user.target
